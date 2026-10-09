@@ -47,7 +47,7 @@ namespace BIMQualityAuditor.Services
                 foreach (var elem in elements)
                 {
                     string uniqueId = elem.UniqueId;
-                    long elemId = elem.Id.Value; // Revit 2027 long ElementId
+                    long elemId = elem.Id.Value; // Revit 2025 long ElementId
 
                     if (!elementMap.TryGetValue(uniqueId, out var elemResult))
                     {

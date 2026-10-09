@@ -1,4 +1,4 @@
-# 🏢 AudiBIM - BIM Quality Auditor para Autodesk Revit 2027
+# 🏢 AudiBIM - BIM Quality Auditor para Autodesk Revit 2025
 
 **AudiBIM** es una aplicación / Add-in para Autodesk Revit diseñada para realizar **auditorías automáticas de calidad en modelos BIM** mediante reglas configurables en archivos Markdown (`.md`).
 
@@ -21,8 +21,8 @@
 ```
 P1 Auditoria BIM/
 ├── App.cs                          # Registro del Ribbon, Panel "Auditoria" y Botón "AudiBIM"
-├── BIMQualityAuditor.csproj        # Proyecto C# (.NET 8 / .NET 10 para Revit 2027)
-├── BIMQualityAuditor.addin         # Manifiesto Add-in para Revit 2027
+├── BIMQualityAuditor.csproj        # Proyecto C# (.NET 8 para Revit 2025)
+├── BIMQualityAuditor.addin         # Manifiesto Add-in para Revit 2025
 ├── Commands/
 │   └── OpenAuditorCommand.cs       # Comando IExternalCommand y gestión de eventos
 ├── Core/
@@ -52,8 +52,8 @@ P1 Auditoria BIM/
 
 ## 🛠️ Requisitos de Desarrollo
 
-- **Autodesk Revit 2027**
-- **.NET SDK 8.0 / .NET 10.0**
+- **Autodesk Revit 2025**
+- **.NET SDK 8.0**
 - **Visual Studio 2022 / Visual Studio Code**
 
 ---
@@ -62,21 +62,24 @@ P1 Auditoria BIM/
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/ComunidadECD/Repo01-AudiBIM.git
+   git clone https://github.com/LuisChahuaArqLE/Repo01-AudiBIM.git
    ```
 
 2. Compila el proyecto con .NET CLI o Visual Studio:
    ```bash
-   dotnet build BIMQualityAuditor.csproj
+   dotnet build BIMQualityAuditor.csproj -c Release
    ```
 
-3. Instala el manifiesto `.addin` en la carpeta de Add-ins de Revit:
-   Copiar `BIMQualityAuditor.addin` a:
-   `C:\Users\<TuUsuario>\AppData\Roaming\Autodesk\Revit\Addins\2027\`
+3. Con Revit cerrado, copia el contenido de `bin\Release\net8.0-windows\` (DLL, manifiesto e imágenes) a una carpeta `AudiBIM` dentro de:
+   `C:\Users\<TuUsuario>\AppData\Roaming\Autodesk\Revit\Addins\2025\`
 
-4. Asegúrate de que la ruta del ensamblado `<Assembly>` dentro del archivo `.addin` apunte a la DLL compilada (`BIMQualityAuditor.dll`).
+4. Mueve `BIMQualityAuditor.addin` de la subcarpeta `AudiBIM` a la carpeta `2025` y cambia su entrada a `<Assembly>AudiBIM\BIMQualityAuditor.dll</Assembly>`. Evita registrar dos manifiestos de AudiBIM con el mismo `AddInId`.
 
-5. Abre Revit 2027. Encontrarás el Add-in en la pestaña **Automatización BIM** -> Panel **Auditoria** -> Botón **AudiBIM**.
+5. Abre Revit 2025. Encontrarás el Add-in en la pestaña **Automatización BIM** -> Panel **Auditoria** -> Botón **AudiBIM**.
+
+La compilación referencia por defecto las DLL de `C:\Program Files\Autodesk\Revit 2025`. Si Revit está instalado en otra ruta, usa `dotnet build BIMQualityAuditor.csproj -c Release -p:RevitInstallDir="D:\Autodesk\Revit 2025"`.
+
+Esta variante conserva las funciones del repositorio original [ComunidadECD/Repo01-AudiBIM](https://github.com/ComunidadECD/Repo01-AudiBIM) y utiliza .NET 8 para Revit 2025.
 
 ---
 
